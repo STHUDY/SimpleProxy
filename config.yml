@@ -1,0 +1,15 @@
+server:
+  autoInfoTime: 600
+  bufferSize: 65535
+  threadNumber: 3000
+  keepThreadNumber: 0
+  timeout: 60
+  port: 9800
+  closeModleType: 1
+client:
+  ip: 127.0.0.1
+  port: 10808
+ip:
+  ban: []
+  allow: []
+
