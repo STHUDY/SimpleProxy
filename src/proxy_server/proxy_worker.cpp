@@ -68,8 +68,6 @@ void proxy_worker::controlAtoB()
             break;
         }
 
-        usleep(1000);
-
         if (result == 0)
         {
             char buffer[1];
@@ -214,8 +212,6 @@ void proxy_worker::controlBtoA()
         {
             break;
         }
-
-        usleep(1000);
 
         if (result == 0)
         {
