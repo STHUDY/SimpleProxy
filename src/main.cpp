@@ -10,6 +10,7 @@ proxy_global_info Gloabl_global_info;
 bool proxy_sever_close = false;
 int proxy_server_ctrl_type = 0;
 
+int thread_wait_time_ms;
 int auto_info_time;
 int server_port;
 int thread_num;
@@ -18,6 +19,7 @@ int buffer_size;
 std::string client_ip;
 int client_port;
 int timeoutConf;
+long clear_thread_wait_time;
 std::vector<std::string> ban_ip;
 std::vector<std::string> allow_ip;
 
@@ -454,6 +456,8 @@ int main()
         proxy_server_ctrl_type = config["server"]["closeModleType"].as<int>();
         buffer_size = config["server"]["bufferSize"].as<int>();
         timeoutConf = config["server"]["timeout"].as<int>();
+        thread_wait_time_ms = config["server"]["threadWaitTimeMs"].as<int>();
+        clear_thread_wait_time = config["server"]["clearThradeWaitTime"].as<long>();
         client_ip = config["client"]["ip"].as<std::string>();
         client_port = config["client"]["port"].as<int>();
 
@@ -468,6 +472,8 @@ int main()
         threadpool = new ThreadpoolAutoCtrlByTime(keep_tread_num, thread_num + add_thread_number);
         threadpool->setMissionDropCallback(ConnectMissionDrop);
         threadpool->openOutputError();
+        threadpool->setWaitTimeMs(thread_wait_time_ms);
+        threadpool->setClearThreadTimeMs(clear_thread_wait_time);
 
         std::cout << "Ban List:" << std::endl;
         for (const auto &item : banList)

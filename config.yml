@@ -6,6 +6,8 @@ server:
   timeout: 60
   port: 9800
   closeModleType: 1
+  threadWaitTimeMs: 1000
+  clearThradeWaitTime: 1800000
 client:
   ip: 127.0.0.1
   port: 10808

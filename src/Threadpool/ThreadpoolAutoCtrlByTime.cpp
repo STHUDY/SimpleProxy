@@ -31,7 +31,8 @@ void ThreadpoolAutoCtrlByTime::managerThreadpool()
             ThreadpoolSimple::setPoolSize(this->min_thread_number);
             lastAdjustTime = now;
             std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-            waitLastTime = now;
+            if (this->wait_time_ms <= 0)
+                waitLastTime = now;
             continue;
         }
         else if (poolSize > this->max_thread_number)
@@ -39,7 +40,8 @@ void ThreadpoolAutoCtrlByTime::managerThreadpool()
             ThreadpoolSimple::setPoolSize(this->max_thread_number);
             lastAdjustTime = now;
             std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-            waitLastTime = now;
+            if (this->wait_time_ms <= 0)
+                waitLastTime = now;
             continue;
         }
 
@@ -66,6 +68,8 @@ void ThreadpoolAutoCtrlByTime::managerThreadpool()
                 ThreadpoolSimple::setPoolSize(targetThreads);
                 lastAdjustTime = now;
                 std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+                if (this->wait_time_ms <= 0)
+                    waitLastTime = now;
                 continue;
             }
         }
@@ -97,8 +101,8 @@ void ThreadpoolAutoCtrlByTime::managerThreadpool()
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
         }
-
-        waitLastTime = now;
+        if (this->wait_time_ms <= 0)
+            waitLastTime = now;
         lastPoolSize = poolSize;
     }
 }
